@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "965299626657",
+    "project_id": "fir-noti-a56eb",
+    "storage_bucket": "fir-noti-a56eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965299626657:android:4035408efdbba66b0dc6e0",
+        "android_client_info": {
+          "package_name": "com.example.firebase_realtime_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965299626657-ubo88modj0lc2ku0gnto624ps6upp06g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZu8TFN7k8ce0EjPX7BX_CZCWJgjXVA_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965299626657-ubo88modj0lc2ku0gnto624ps6upp06g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
