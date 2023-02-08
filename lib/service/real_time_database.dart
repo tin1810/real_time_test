@@ -17,7 +17,9 @@ class RealTimeDataBaseImpl extends SocialAgent {
   @override
   Stream<List<Order>> getOrder() {
     return databaseRef.child(orderPath).onValue.map((event) {
-      return (event.snapshot.value   as Map<String, dynamic>).values.map<Order>((element) {
+      return (event.snapshot.value as Map<dynamic, dynamic>)
+          .values
+          .map<Order>((element) {
         return Order.fromJson(Map<String, dynamic>.from(element));
       }).toList();
     });

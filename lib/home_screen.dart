@@ -24,6 +24,8 @@ class HomeScreen extends StatelessWidget {
                       return ListTile(
                         leading: Text(model.orders?[index].customerName ?? ""),
                         title: Text(model.orders?[index].statusByText ?? ""),
+                        subtitle:
+                            Text(model.orders?[index].vendorAddress ?? ""),
                       );
                     },
                     separatorBuilder: (context, index) {
