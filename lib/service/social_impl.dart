@@ -1,17 +1,16 @@
-import 'package:firebase_realtime_test/model/social_model.dart';
+import 'package:firebase_realtime_test/service/social_agent.dart';
+import 'package:firebase_realtime_test/service/real_time_database.dart';
 import 'package:firebase_realtime_test/vo/order_vo.dart';
 
-class SocialImpl extends SocialModel{
-  @override
-  Stream<Order> getOrderById(int? orderId) {
-    // TODO: implement getOrderById
-    throw UnimplementedError();
+class SocialImpl extends SocialAgent {
+  static final SocialImpl _singleton = SocialImpl._internal();
+  factory SocialImpl() {
+    return _singleton;
   }
-  
+  SocialImpl._internal();
+  SocialAgent mDataAgent = RealTimeDataBaseImpl() as SocialAgent;
   @override
   Stream<List<Order>> getOrder() {
-    // TODO: implement getOrder
-    throw UnimplementedError();
+    return mDataAgent.getOrder();
   }
-  
 }

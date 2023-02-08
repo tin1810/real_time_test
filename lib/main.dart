@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_realtime_test/home_screen.dart';
+import 'package:firebase_realtime_test/model/order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'addnote.dart';
 
@@ -18,15 +20,21 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final OrderModel orderModel = OrderModel();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "todo app",
-      theme: ThemeData(
-        primaryColor: Colors.greenAccent[700],
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: orderModel),
+      ],
+      child: MaterialApp(
+        title: "todo app",
+        theme: ThemeData(
+          primaryColor: Colors.greenAccent[700],
+        ),
+        home: const HomeScreen(),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const HomeScreen(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
