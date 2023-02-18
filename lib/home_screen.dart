@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                         leading: Text(model.orders?[index].customerName ?? ""),
                         title: Text(model.orders?[index].statusByText ?? ""),
                         subtitle:
-                            Text(model.orders?[index].vendorAddress ?? ""),
+                            Text(model.orders?[index].vendorAddress ?? "ddddd"),
                       );
                     },
                     separatorBuilder: (context, index) {
