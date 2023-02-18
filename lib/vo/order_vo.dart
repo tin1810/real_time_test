@@ -1,62 +1,49 @@
-class Order {
+class RealTimeOrder {
   String? customerAddress;
   String? customerId;
   String? customerName;
-  String? driverId;
-  String? driverName;
-  String? id;
-  String? orderApproveDate;
+  String? deliveryId;
+  String? deliveryName;
   String? orderCompleteDate;
   String? orderCreateDate;
-  String? orderDate;
-  String? orderOnWayDate;
-  String? orderPickUpDate;
-  int? status;
-  String? statusByText;
+  RealTimeOrderDetail? orderDetail;
   String? transactionRef;
-  String? vendorAddress;
-  String? vendorId;
-  String? vendorName;
+  int? transactionStatus;
+  String? transactionStatusByText;
+  List<String>? vendorIdLists;
 
-  Order(
+  RealTimeOrder(
       {this.customerAddress,
       this.customerId,
       this.customerName,
-      this.driverId,
-      this.driverName,
-      this.id,
-      this.orderApproveDate,
+      this.deliveryId,
+      this.deliveryName,
       this.orderCompleteDate,
       this.orderCreateDate,
-      this.orderDate,
-      this.orderOnWayDate,
-      this.orderPickUpDate,
-      this.status,
-      this.statusByText,
+      this.orderDetail,
       this.transactionRef,
-      this.vendorAddress,
-      this.vendorId,
-      this.vendorName});
+      this.transactionStatus,
+      this.transactionStatusByText,
+      this.vendorIdLists});
 
-  Order.fromJson(Map<String, dynamic> json) {
-    customerAddress = json['customer_address'];
-    customerId = json['customer_id'];
-    customerName = json['customer_name'];
-    driverId = json['driver_id'];
-    driverName = json['driver_name'];
-    id = json['id'];
-    orderApproveDate = json['order_approve_date'];
-    orderCompleteDate = json['order_complete_date'];
-    orderCreateDate = json['order_create_date'];
-    orderDate = json['order_date'];
-    orderOnWayDate = json['order_on_way_date'];
-    orderPickUpDate = json['order_pick_up_date'];
-    status = json['status'];
-    statusByText = json['status_by_text'];
-    transactionRef = json['transaction_ref'];
-    vendorAddress = json['vendor_address'];
-    vendorId = json['vendor_id'];
-    vendorName = json['vendor_name'];
+  RealTimeOrder.fromJson(Map<String, dynamic> json) {
+    customerAddress = json['customer_address'] as String;
+    customerId = json['customer_id'] as String;
+    customerName = json['customer_name'] as String;
+    deliveryId = json['delivery_id'] as String;
+    deliveryName = json['delivery_name'] as String;
+    orderCompleteDate = json['order_complete_date'] as String;
+    orderCreateDate = json['order_create_date'] as String;
+
+    orderDetail = json['order_detail'] != null
+        ? new RealTimeOrderDetail.fromJson(
+            Map<String, dynamic>.from(json['order_detail']))
+        : null;
+
+    transactionRef = json['transaction_ref'] as String;
+    transactionStatus = json['transaction_status'] as int;
+    transactionStatusByText = json['transaction_status_by_text'] as String;
+    vendorIdLists = json['vendor_id_lists'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
@@ -64,21 +51,82 @@ class Order {
     data['customer_address'] = this.customerAddress;
     data['customer_id'] = this.customerId;
     data['customer_name'] = this.customerName;
-    data['driver_id'] = this.driverId;
-    data['driver_name'] = this.driverName;
-    data['id'] = this.id;
-    data['order_approve_date'] = this.orderApproveDate;
+    data['delivery_id'] = this.deliveryId;
+    data['delivery_name'] = this.deliveryName;
     data['order_complete_date'] = this.orderCompleteDate;
     data['order_create_date'] = this.orderCreateDate;
-    data['order_date'] = this.orderDate;
-    data['order_on_way_date'] = this.orderOnWayDate;
-    data['order_pick_up_date'] = this.orderPickUpDate;
+
+    if (this.orderDetail != null) {
+      data['order_detail'] = this.orderDetail!.toJson();
+    }
+
+    data['transaction_ref'] = this.transactionRef;
+    data['transaction_status'] = this.transactionStatus;
+    data['transaction_status_by_text'] = this.transactionStatusByText;
+    data['vendor_id_lists'] = this.vendorIdLists;
+    return data;
+  }
+}
+
+class RealTimeOrderDetail {
+  List<OrderState>? orderState;
+  int? status;
+  String? statusByText;
+  String? vendorAddress;
+  String? vendorId;
+  String? vendorName;
+
+  RealTimeOrderDetail(
+      {this.orderState,
+      this.status,
+      this.statusByText,
+      this.vendorAddress,
+      this.vendorId,
+      this.vendorName});
+
+  RealTimeOrderDetail.fromJson(Map<String, dynamic> json) {
+    if (json['order_state'] != null) {
+      orderState = <OrderState>[];
+      json['order_state'].forEach((v) {
+        orderState!.add(new OrderState.fromJson(v));
+      });
+    }
+    status = json['status'];
+    statusByText = json['status_by_text'];
+    vendorAddress = json['vendor_address'];
+    vendorId = json['vendor_id'];
+    vendorName = json['vendor_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.orderState != null) {
+      data['order_state'] = this.orderState!.map((v) => v.toJson()).toList();
+    }
     data['status'] = this.status;
     data['status_by_text'] = this.statusByText;
-    data['transaction_ref'] = this.transactionRef;
     data['vendor_address'] = this.vendorAddress;
     data['vendor_id'] = this.vendorId;
     data['vendor_name'] = this.vendorName;
+    return data;
+  }
+}
+
+class OrderState {
+  String? datetime;
+  String? status;
+
+  OrderState({this.datetime, this.status});
+
+  OrderState.fromJson(Map<String, dynamic> json) {
+    datetime = json['datetime'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['datetime'] = this.datetime;
+    data['status'] = this.status;
     return data;
   }
 }

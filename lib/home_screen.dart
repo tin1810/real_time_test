@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import 'vo/notification_vo.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -22,10 +24,13 @@ class HomeScreen extends StatelessWidget {
                 child: ListView.separated(
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: Text(model.orders?[index].customerName ?? ""),
-                        title: Text(model.orders?[index].statusByText ?? ""),
-                        subtitle:
-                            Text(model.orders?[index].vendorAddress ?? "ddddd"),
+                        leading: Text(model.realNoti?.vendorKey ?? "fhi"),
+                        title: Text(
+                            model.orders?[index].orderDetail!.statusByText ??
+                                ""),
+                        subtitle: Text(
+                            model.orders?[index].orderDetail!.statusByText ??
+                                "ddddd"),
                       );
                     },
                     separatorBuilder: (context, index) {

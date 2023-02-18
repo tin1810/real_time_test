@@ -1,8 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_realtime_test/service/social_agent.dart';
+import 'package:firebase_realtime_test/vo/notification_vo.dart';
 import 'package:firebase_realtime_test/vo/order_vo.dart';
 
 const orderPath = "order";
+const notiPath = "notification";
+const vendorPath = "vendor";
 
 class RealTimeDataBaseImpl extends SocialAgent {
   static final RealTimeDataBaseImpl _singleton =
@@ -15,16 +18,31 @@ class RealTimeDataBaseImpl extends SocialAgent {
   var databaseRef = FirebaseDatabase.instance.ref();
 
   @override
-  Stream<List<Order>> getOrder() {
+  Stream<List<RealTimeOrder>> getOrder() {
     return databaseRef.child(orderPath).onValue.map((event) {
       return (event.snapshot.value as Map<dynamic, dynamic>)
           .values
-          .map<Order>((element) {
-        return Order.fromJson(Map<String, dynamic>.from(element));
+          .map<RealTimeOrder>((element) {
+        return RealTimeOrder.fromJson(Map<String, dynamic>.from(element));
       }).toList();
     });
   }
+
+  @override
+  Stream<Noti?> getNoti() {
+    Noti? noti;
+    databaseRef.child(notiPath).child(vendorPath).onChildAdded.listen((data) {
+      RealNotification realNotification =
+          RealNotification.fromJson(data.snapshot.value as Map);
+
+      noti = Noti(
+          vendorKey: data.snapshot.key, realNotification: realNotification);
+    });
+    return Stream.value(noti);
+  }
 }
+
+
 
   // @override
   // Stream<Order> getOrderbyId(int? orderId) {
