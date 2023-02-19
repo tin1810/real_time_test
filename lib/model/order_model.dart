@@ -7,7 +7,7 @@ import '../service/social_agent.dart';
 
 class OrderModel extends ChangeNotifier {
   List<RealTimeOrder>? orders;
-  Noti? realNoti;
+  List<Noti>? notiList = [];
   bool isDisposed = false;
   final SocialAgent _msocialModel = SocialImpl();
 
@@ -18,9 +18,12 @@ class OrderModel extends ChangeNotifier {
         notifyListeners();
       }
     });
-
-    _msocialModel.getNoti().listen((notis) {
-      realNoti = notis;
+    _msocialModel.getNoti().onChildAdded.listen((event) {
+      RealNotification realNotification =
+          RealNotification.fromJson(event.snapshot.value as Map);
+      Noti noti = Noti(
+          vendorKey: event.snapshot.key, realNotification: realNotification);
+      notiList?.add(noti);
       if (!isDisposed) {
         notifyListeners();
       }

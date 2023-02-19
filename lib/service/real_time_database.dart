@@ -29,17 +29,23 @@ class RealTimeDataBaseImpl extends SocialAgent {
   }
 
   @override
-  Stream<Noti?> getNoti() {
-    Noti? noti;
-    databaseRef.child(notiPath).child(vendorPath).onChildAdded.listen((data) {
-      RealNotification realNotification =
-          RealNotification.fromJson(data.snapshot.value as Map);
-
-      noti = Noti(
-          vendorKey: data.snapshot.key, realNotification: realNotification);
-    });
-    return Stream.value(noti);
+  DatabaseReference getNoti() {
+    var reference = databaseRef.child(notiPath).child(vendorPath);
+    return reference;
   }
+
+  // @override
+  // Stream<List<Noti>?> getNoti() {
+  //   Noti? noti;
+  //   databaseRef.child(notiPath).child(vendorPath).onChildAdded.listen((data) {
+  //     RealNotification realNotification =
+  //         RealNotification.fromJson(data.snapshot.value as Map);
+
+  //     noti = Noti(
+  //         vendorKey: data.snapshot.key, realNotification: realNotification);
+  //   });
+  //   return Stream.value(noti);
+  // }
 }
 
 

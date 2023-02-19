@@ -13,14 +13,17 @@ class RealNotification {
   int? complete;
   int? news;
   int? processing;
+  String? key;
 
-  RealNotification({this.cancel, this.complete, this.news, this.processing});
+  RealNotification(
+      {this.cancel, this.complete, this.news, this.processing, this.key});
 
   RealNotification.fromJson(Map<dynamic, dynamic> json) {
     cancel = json['cancel'];
     complete = json['complete'];
     news = json['new'];
     processing = json['processing'];
+    key = json[''];
   }
 
   Map<dynamic, dynamic> toJson() {
@@ -29,6 +32,7 @@ class RealNotification {
     data['complete'] = this.complete;
     data['new'] = this.news;
     data['processing'] = this.processing;
+    data[''] = this.key;
     return data;
   }
 }

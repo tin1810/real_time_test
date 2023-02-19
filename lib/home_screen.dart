@@ -11,38 +11,41 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Real Time Data"),
-      ),
-      body: Column(
-        children: [
-          Consumer<OrderModel>(
-            builder: ((context, model, child) {
-              return Container(
-                height: 200,
-                child: ListView.separated(
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Text(model.realNoti?.vendorKey ?? "fhi"),
-                        title: Text(
-                            model.orders?[index].orderDetail!.statusByText ??
-                                ""),
-                        subtitle: Text(
-                            model.orders?[index].orderDetail!.statusByText ??
-                                "ddddd"),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 20,
-                      );
-                    },
-                    itemCount: model.orders?.length ?? 1),
-              );
-            }),
-          ),
-        ],
+    return ChangeNotifierProvider(
+      create: (context) => OrderModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Real Time Data"),
+        ),
+        body: Column(
+          children: [
+            Consumer<OrderModel>(
+              builder: ((context, model, child) {
+                return Container(
+                  height: 200,
+                  child: ListView.separated(
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: Text("${model.notiList?[index].vendorKey}"),
+                          title: Text(
+                              model.orders?[index].orderDetail!.statusByText ??
+                                  "fail order"),
+                          subtitle: Text(
+                              model.orders?[index].orderDetail!.statusByText ??
+                                  "fail order"),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 20,
+                        );
+                      },
+                      itemCount: model.notiList?.length ?? 1),
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
