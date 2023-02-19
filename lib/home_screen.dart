@@ -21,26 +21,29 @@ class HomeScreen extends StatelessWidget {
           children: [
             Consumer<OrderModel>(
               builder: ((context, model, child) {
-                return Container(
-                  height: 200,
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          leading: Text("${model.notiList?[index].vendorKey}"),
-                          title: Text(
-                              model.orders?[index].orderDetail!.statusByText ??
-                                  "fail order"),
-                          subtitle: Text(
-                              model.orders?[index].orderDetail!.statusByText ??
-                                  "fail order"),
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 20,
-                        );
-                      },
-                      itemCount: model.notiList?.length ?? 1),
+                return Expanded(
+                  child: Container(
+                    child: ListView.separated(
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            leading:
+                                Text("${model.notiList?[index].vendorKey}"),
+                            title: CircleAvatar(
+                              child: Text(
+                                  "${model.notiList?[index].realNotification?.news}"),
+                            ),
+                            // subtitle: Text(model
+                            //         .orders?[index].orderDetail!.statusByText ??
+                            //     "fail order"),
+                          );
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 20,
+                          );
+                        },
+                        itemCount: model.notiList?.length ?? 1),
+                  ),
                 );
               }),
             ),
